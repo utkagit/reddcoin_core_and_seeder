@@ -1,0 +1,30 @@
+FROM ubuntu:14.04
+
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+
+RUN sudo apt-get update && sudo apt-get install git -y \
+&& sudo apt-get install -y build-essential libtool autotools-dev autoconf libssl-dev libboost-all-dev \
+&& sudo apt-get install software-properties-common -y \
+&& sudo apt-get install bsdmainutils -y \
+&&  sudo add-apt-repository ppa:bitcoin/bitcoin -y \
+&& sudo apt-get update && apt-get install -y libdb4.8-dev libdb4.8++-dev libminiupnpc-dev pkg-config
+
+RUN mkdir /git && cd /git && sudo git clone https://github.com/reddcoin-project/reddcoin.git && sudo chmod 777 * -R
+
+RUN echo "cd /git/reddcoin/" > /git/reddcoin/compile.sh && echo "./autogen.sh" >>  /git/reddcoin/compile.sh \
+&& echo "./configure" >> /git/reddcoin/compile.sh \
+&& echo "make install" >> /git/reddcoin/compile.sh \
+&& sudo chmod o+x /git/reddcoin/compile.sh
+
+RUN /git/reddcoin/compile.sh
+
+RUN cat /git/reddcoin/compile.sh
+
+RUN /usr/local/bin/reddcoind || :
+
+#COPY reddcoin.conf /root/.reddcoin/reddcoin.conf
+
+EXPOSE 45444
+EXPOSE 45443
+
+ENTRYPOINT /usr/local/bin/reddcoind

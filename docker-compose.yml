@@ -1,0 +1,34 @@
+version: '3'
+services:
+  reddcoin-core:
+    image: "reddcoin:01"
+    volumes:
+    - ./redd-data-dir/:/root/.reddcoin/
+    networks:
+     net1:
+       aliases:
+        - alias2
+    ports:
+     - 0.0.0.0:45444:45444
+     - 0.0.0.0:45443:45443
+  reddcoin-dnsseed:
+    image: reddcoin-dnsseed
+    networks:
+     net1:
+       aliases:
+        - dnsseed
+    volumes:
+    - ./redd-data-dir/:/root/.reddcoin/
+    ports:
+     - 0.0.0.0:53:53/udp
+    links:
+      - reddcoin-core
+    # after the '-h' flag - use this node's hostname 
+    # after '-n' use it's external ip
+    # after '-p' specifiy a port
+    # example: /git/reddcoin-seeder/dnsseed -h seeder.reddcoin-seeder.ink -n 52.112.27.11
+    # edit the below example with the correct info:
+    entrypoint: /git/reddcoin-seeder/dnsseed -h localhost -n localhost -p 53
+
+networks:
+  net1:
