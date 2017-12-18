@@ -1,7 +1,10 @@
 version: '3'
 services:
   reddcoin-core:
-    image: reddcoin-core 
+    container_name: reddcoin-core
+    build:
+      context: ./
+      dockerfile: Dockerfile-reddcore
     volumes:
     - ./redd-data-dir/:/root/.reddcoin/
     networks:
@@ -12,7 +15,10 @@ services:
      - 0.0.0.0:45444:45444
      - 0.0.0.0:45443:45443
   reddcoin-dnsseed:
-    image: reddcoin-dnsseed
+    container_name reddcoin-dnsseed
+    build:
+      context: ./
+      dockefile: Dockerfile-redd-dnsseed
     networks:
      net1:
        aliases:
