@@ -18,7 +18,7 @@ services:
     container_name: reddcoin-dnsseed
     build:
       context: ./
-      dockefile: Dockerfile-redd-dnsseed
+      dockerfile: Dockerfile-redd-dnsseed
     networks:
      net1:
        aliases:
