@@ -15,7 +15,7 @@ services:
      - 0.0.0.0:45444:45444
      - 0.0.0.0:45443:45443
   reddcoin-dnsseed:
-    container_name reddcoin-dnsseed
+    container_name: reddcoin-dnsseed
     build:
       context: ./
       dockefile: Dockerfile-redd-dnsseed
