@@ -9,7 +9,7 @@ RUN sudo apt-get update && sudo apt-get install git -y \
 &&  sudo add-apt-repository ppa:bitcoin/bitcoin -y \
 && sudo apt-get update && apt-get install -y libdb4.8-dev libdb4.8++-dev libminiupnpc-dev pkg-config
 
-RUN mkdir /git && cd /git && sudo git clone https://github.com/reddcoin-project/reddcoin.git && sudo chmod 777 * -R
+RUN mkdir /git && cd /git && sudo git clone https://github.com/reddcoin-project/reddcoin.git Reddcoin && sudo chmod 777 * -R
 
 RUN echo "cd /git/reddcoin/" > /git/reddcoin/compile.sh && echo "./autogen.sh" >>  /git/reddcoin/compile.sh \
 && echo "./configure" >> /git/reddcoin/compile.sh \
